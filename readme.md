@@ -42,6 +42,18 @@ from Docker documentation about extending and having multiple compose files.
 Please note that this template is using [Swoole Laravel](https://github.com/swooletw/laravel-swoole) package to 
 help running your code faster, feel free to read more about [Swoole](https://www.swoole.co.uk/#get-started).
 
+## Installed packages:
+
+These are the packages that I've installed, other than the one comes with laravel.
+
+1. [Swoole Laravel](https://github.com/swooletw/laravel-swoole).
+1. [Laravel CORS](https://github.com/barryvdh/laravel-cors).
+1. [PRedis](https://github.com/nrk/predis).
+1. [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar).
+1. [Laravel IDE Helper](https://github.com/barryvdh/laravel-ide-helper).
+1. [PHP CS Fixer](https://github.com/friendsofphp/php-cs-fixer).
+1. [PHP Code Sniffer](https://github.com/squizlabs/php_codesniffer).
+
 ---
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
