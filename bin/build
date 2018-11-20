@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+echo "Build hook running"
+
+TAG=$1
+
+TAG=${TAG:=latest}
+
+export COMMIT_HASH=`git rev-parse --short HEAD`
+
+// Get the directory name using bash
+export IMAGE=${PWD##*/}
+
+export IMAGE_COMMIT=$IMAGE:$COMMIT_HASH
+
+export IMAGE_NAME=$IMAGE:$TAG && docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+             --build-arg VCS_REF=$COMMIT_HASH \
+             --build-arg IMAGE_NAME=$IMAGE_NAME \
+                         -t $IMAGE_NAME .

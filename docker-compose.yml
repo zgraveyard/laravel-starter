@@ -1,0 +1,75 @@
+version: "3.6"
+
+services:
+
+  app:
+    image: zaherg/laravel-starter
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    volumes:
+      - ./:/var/www
+    labels:
+      - "traefik.backend=web"
+      - "traefik.frontend.rule=Host:web.docker.local"
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.backend.loadbalancer.method=drr"
+    healthcheck:
+      disable: true
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  database:
+    image: mysql:5.7
+    hostname: database
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_RANDOM_ROOT_PASSWORD=yes"
+      - "MYSQL_DATABASE=docker"
+      - "MYSQL_USER=docker"
+      - "MYSQL_PASSWORD=secret"
+    networks:
+      - backend
+    volumes:
+      - mysql:/var/lib/mysql
+    labels:
+      - "traefik.backend=database"
+      - "traefik.enable=false"
+    restart: unless-stopped
+
+  proxy:
+    image: traefik:latest
+    command:
+      - --web
+      - --web.statistics
+      - --docker
+      - "--docker.domain=docker.local"
+      - "--docker.swarmMode=false"
+      - "--logLevel=DEBUG"
+      - --defaultentrypoints=gamester
+      - "--entryPoints=Name:gamester Address::80 Compress:true"
+    networks:
+      - backend
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+    labels:
+      - "traefik.backend=proxy"
+      - "traefik.frontend.rule=Host:proxy.docker.local"
+      - "traefik.enable=true"
+      - "traefik.port=8080"
+    restart: unless-stopped
+
+networks:
+  backend:
+
+volumes:
+  mysql:

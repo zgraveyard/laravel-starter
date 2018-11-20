@@ -1,0 +1,46 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->name('*.php')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'app')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'config')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'database')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'routes')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'tests');
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PSR2' => true,
+        '@Symfony' => true,
+        'list_syntax' => ['syntax' => 'short'],
+        'array_syntax' => ['syntax' => 'short'],
+        'strict_param' => true,
+        'phpdoc_order' => true,
+        'ordered_imports' => ['sortAlgorithm' => 'length'],
+        'no_unused_imports' => true,
+        'method_argument_space' => ['ensure_fully_multiline' => true],
+        'ordered_class_elements' => [
+            'order' => [
+                'use_trait',
+                'constant_public',
+                'constant_protected',
+                'constant_private',
+                'property_public',
+                'property_protected',
+                'property_private',
+                'construct',
+                'destruct',
+                'magic',
+                'phpunit',
+                'method_public',
+                'method_protected',
+                'method_private'
+            ],
+            'sortAlgorithm' => 'none'
+        ],
+        'align_multiline_comment' => ['comment_type' => 'all_multiline'],
+        'trailing_comma_in_multiline_array' => true,
+        'phpdoc_annotation_without_dot' => true,
+    ])
+    ->setFinder($finder);
