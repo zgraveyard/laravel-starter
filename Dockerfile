@@ -1,4 +1,4 @@
-FROM zaherg/php72-swoole:latest
+FROM zaherg/php-swoole:7.2
 ARG BUILD_DATE
 ARG VCS_REF
 ARG IMAGE_NAME
