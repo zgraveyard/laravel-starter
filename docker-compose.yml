@@ -51,8 +51,8 @@ services:
       - "--docker.domain=docker.local"
       - "--docker.swarmMode=false"
       - "--logLevel=DEBUG"
-      - --defaultentrypoints=gamester
-      - "--entryPoints=Name:gamester Address::80 Compress:true"
+      - --defaultentrypoints=web
+      - "--entryPoints=Name:web Address::80 Compress:true"
     networks:
       - backend
     ports:
